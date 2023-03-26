@@ -563,7 +563,7 @@ public class Interfaz extends JFrame {
 	     pasos.setLocation(125,10);
 	     info.add(pasos);
 	     
-	     JButton opcion = new JButton("Crear un usuaria ahora");
+	     JButton opcion = new JButton("Crear un usuario ahora");
 	     opcion.setSize(120,30);
 	     opcion.setLocation(60,410);
 	     opcion.setBackground(Color.decode("#00E7FF"));
