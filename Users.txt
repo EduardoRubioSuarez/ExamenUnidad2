@@ -1,1 +1,4 @@
-asd,asd1,asd@gmail.com,123
+asd,vargas,asd@gmail.com,123,
+jonathan,soto,jsoto@uabcs.mx,password123,
+peddro,vargas,pedo@gmail.com,1234
+daniel,carreno,dan13@uabcs.mx,contrasena

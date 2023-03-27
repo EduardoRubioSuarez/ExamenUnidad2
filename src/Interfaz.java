@@ -57,7 +57,6 @@ public class Interfaz extends JFrame {
 	     
 	     ////////////////////////////////////////////////////////////////////////////////////
 	     //SPLASH
-	     /*
 	     
 	     splash.setSize(500,700);
 	     splash.setLocation(0,0);
@@ -65,10 +64,10 @@ public class Interfaz extends JFrame {
 	     splash.setBackground(Color.decode("#56ffff"));
 	     this.add(splash);
 		
-	     JLabel imagen = new JLabel(new ImageIcon("splash.png"));
-	     imagen.setSize(300,300);
-	     imagen.setLocation(55,30);
-	     splash.add(imagen);
+	     JLabel imagenS = new JLabel(new ImageIcon("splash.png"));
+	     imagenS.setSize(300,300);
+	     imagenS.setLocation(55,30);
+	     splash.add(imagenS);
 	     		
 	     JLabel nombre = new JLabel ("Andres Eduardo Rubio Suarez",JLabel.CENTER);
 	     nombre.setSize(300,100);
@@ -81,20 +80,20 @@ public class Interfaz extends JFrame {
 	     nombre1.setLocation(40,370);
 	     nombre1.setForeground(Color.decode("#211379"));
 	     
-	     JProgressBar barra = new JProgressBar();
-	     barra.setBounds(70,340,260,20);
-	     barra.setVisible(true);
+	     JProgressBar barraCarga = new JProgressBar();
+	     barraCarga.setBounds(70,340,260,20);
+	     barraCarga.setVisible(true);
 	     
 	     splash.add(nombre);
 	     splash.add(nombre1);
-	     splash.add(barra);
+	     splash.add(barraCarga);
 	     
 	     this.repaint();
 	     
 	     
 	     int contadorBarra=0;
 	     	while(contadorBarra<=100) {
-	    	 	barra.setValue(contadorBarra);
+	     		barraCarga.setValue(contadorBarra);
 	    	 	try {
 	    		 	Thread.sleep(20);
 	    	 	} catch (InterruptedException e) {
@@ -107,13 +106,12 @@ public class Interfaz extends JFrame {
 
 	     ////////////////////////////////////////////////////////////////////////////////////
 	     //LOGIN
-	     */
 	     
 	     login.setSize(500,700);
 	     login.setLocation(0,0);
 	     login.setLayout(null);
 	     login.setBackground(Color.decode("#008891"));
-	     //this.add(login);
+	     this.add(login);
 	     
 	     JLabel titulo1 = new JLabel ("Accede a tu cuenta",JLabel.CENTER);
 	     titulo1.setSize(390,50);
@@ -156,6 +154,15 @@ public class Interfaz extends JFrame {
 	     cancelar.setForeground(Color.black);
 	     login.add(cancelar);
 	     
+	     cancelar.addActionListener(new ActionListener() {
+	    	 @Override
+	    	 public void actionPerformed(ActionEvent e) {
+	    		 nomU.setText("");
+	    		 pass.setText("");
+	    		 repaint();
+	    		 revalidate();
+	    	 }
+	     });
 	     
 	     JButton inicio = new JButton("A C C E D E R");
 	     inicio.setSize(130,30);
@@ -171,24 +178,26 @@ public class Interfaz extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				
 				try {
-					BufferedReader  lector = new BufferedReader(new FileReader("C:\\Users\\rubio\\Desktop\\Examen_U2\\ExamenU2\\Users.txt"));
+					BufferedReader  lector;
+					lector = new BufferedReader(new FileReader("C:\\Users\\rubio\\Desktop\\Examen_U2\\ExamenU2\\Users.txt"));
 					String line = lector.readLine();
-					
-					String contrados = new String();
-					char [] letrascontra = pass.getPassword();
-					for(int i=0; i<letrascontra.length;i++) {
-						contrados += letrascontra[i];
-						System.out.println(i);
-					
-						while (line != null) {
-							String [] arreglo  = line.split(",");
-							if(usuario.getText().equals(arreglo[0]) && contrados.equals(arreglo[3])) {
-								System.out.println("inicio sesion");
-								JOptionPane.showMessageDialog(null,"Inicio de sesion correcto","Exito",JOptionPane.INFORMATION_MESSAGE);
-							}
+					String contra = new String(pass.getPassword());
+					int validar=0;
+					while (line != null) {
+						String [] arreglo  = line.split(",");
+						if(nomU.getText().equals(arreglo[0]) && contra.equals(arreglo[3])) {
+							validar = 1;
+							JOptionPane.showMessageDialog(null,"Inicio de sesion correcto","Exito",JOptionPane.INFORMATION_MESSAGE);
+							remove(login);
+							add(menu);
+							repaint();
+							revalidate();
 						}
-					
+						line = lector.readLine();
 					}
+					if(validar != 1 )
+						JOptionPane.showMessageDialog(null,"Inicio de sesion incorrecto","Error", JOptionPane.ERROR_MESSAGE);
+					lector.close();
 				} catch (IOException e1) {
 					e1.printStackTrace();
 				}
@@ -393,11 +402,11 @@ public class Interfaz extends JFrame {
 	     imagen2.setLocation(135,65);
 	     cuenta.add(imagen2);
 	     
-	     JLabel nombre = new JLabel("Nombre: ");
-	     nombre.setSize(100,20);
-	     nombre.setLocation(90, 180);
-	     nombre.setForeground(Color.white);
-	     cuenta.add(nombre);
+	     JLabel nombre2 = new JLabel("Nombre: ");
+	     nombre2.setSize(100,20);
+	     nombre2.setLocation(90, 180);
+	     nombre2.setForeground(Color.white);
+	     cuenta.add(nombre2);
 	     
 	     JTextField nom = new JTextField();
 	     nom.setSize(200,20);
@@ -689,11 +698,11 @@ public class Interfaz extends JFrame {
 	     imagen3.setLocation(132,55);
 	     crear.add(imagen3);
 	     
-	     JLabel nombre1 = new JLabel ("Nombre completo:");
-	     nombre1.setSize(200,100);
-	     nombre1.setLocation(90,130);
-	     nombre1.setForeground(Color.white);
-	     crear.add(nombre1);
+	     JLabel nombre3 = new JLabel ("Nombre completo:");
+	     nombre3.setSize(200,100);
+	     nombre3.setLocation(90,130);
+	     nombre3.setForeground(Color.white);
+	     crear.add(nombre3);
 	     
 	     JTextField nommbre1t = new JTextField();
 	     nommbre1t.setSize(200,25);
