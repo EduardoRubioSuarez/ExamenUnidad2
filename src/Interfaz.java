@@ -11,6 +11,7 @@ import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.FileWriter;
 import java.io.IOException;
 
 import javax.swing.AbstractCellEditor;
@@ -704,10 +705,10 @@ public class Interfaz extends JFrame {
 	     nombre3.setForeground(Color.white);
 	     crear.add(nombre3);
 	     
-	     JTextField nommbre1t = new JTextField();
-	     nommbre1t.setSize(200,25);
-	     nommbre1t.setLocation(90,190);
-	     crear.add(nommbre1t);
+	     JTextField nombre1t = new JTextField();
+	     nombre1t.setSize(200,25);
+	     nombre1t.setLocation(90,190);
+	     crear.add(nombre1t);
 	     
 	     JLabel usuario1 = new JLabel ("Apellido:");
 	     usuario1.setSize(200,100);
@@ -737,7 +738,7 @@ public class Interfaz extends JFrame {
 	     password1.setForeground(Color.white);
 	     crear.add(password1);
 	     
-	     JTextField password1t = new JTextField();
+	     JPasswordField password1t = new JPasswordField();
 	     password1t.setSize(200,25);
 	     password1t.setLocation(90,325);
 	     crear.add(password1t);
@@ -748,7 +749,7 @@ public class Interfaz extends JFrame {
 	     password2.setForeground(Color.white);
 	     crear.add(password2);
 	     
-	     JTextField password2t = new JTextField();
+	     JPasswordField password2t = new JPasswordField();
 	     password2t.setSize(200,25);
 	     password2t.setLocation(90,370);
 	     crear.add(password2t);
@@ -761,12 +762,59 @@ public class Interfaz extends JFrame {
 	     cancelar1.setForeground(Color.black);
 	     crear.add(cancelar1);
 	     
+	     cancelar1.addActionListener(new ActionListener() {
+	    	 @Override
+	    	 public void actionPerformed(ActionEvent e) {
+	    		 nombre1t.setText("");
+	    		 nomU1t.setText("");
+	    		 email1t.setText("");
+	    		 password1t.setText("");
+	    		 password2t.setText("");
+	    		 repaint();
+	    		 revalidate();
+	    	 }
+	     });
+	     
 	     JButton creacion = new JButton("Crear Usuario");
 	     creacion.setSize(120,30);
 	     creacion.setLocation(210,410);
 	     creacion.setBackground(Color.decode("#00FF97"));
 	     creacion.setForeground(Color.black);
 	     crear.add(creacion);
+	     
+	     creacion.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					String txtrenglon="";
+					String cont1 = new String(password1t.getPassword());
+					String cont2 = new String(password2t.getPassword());
+					String nom = new String(nombre1t.getText());
+					String ape = new String(nomU1t.getText());
+					String corr = new String(email1.getText());
+					if(cont1.length()>0 && cont2.length()>0 && nom.length()>0 && ape.length()>0 && corr.length()>0) {
+						if(cont1.equals(cont2)) {
+							JOptionPane.showMessageDialog(null,"Cuenta creada con exito","Exito", JOptionPane.INFORMATION_MESSAGE);
+							
+							try {
+								String archivo = "C:\\\\Users\\\\rubio\\\\Desktop\\\\Examen_U2\\\\ExamenU2\\\\Users.txt";
+								FileWriter escritor = new FileWriter(archivo,true);
+								String contrarchivo = new String(password1t.getPassword());
+								
+								txtrenglon += "\n"+nom+","+ape+","+corr+","+contrarchivo;
+								escritor.write(txtrenglon);
+								escritor.close();
+								
+							}catch(Exception f) {}
+						}
+						else
+							JOptionPane.showMessageDialog(null,"Contrasenas distintas","Error", JOptionPane.ERROR_MESSAGE);
+						
+					}
+				} 
+			});
+	     
+	     
 	     
 	     ////////////////////////////////////////////////////////////////////////////////////
 	     //help
