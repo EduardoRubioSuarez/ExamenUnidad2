@@ -698,7 +698,7 @@ public class Interfaz extends JFrame {
 	     imagen3.setLocation(132,55);
 	     crear.add(imagen3);
 	     
-	     JLabel nombre3 = new JLabel ("Nombre completo:");
+	     JLabel nombre3 = new JLabel ("Nombre:");
 	     nombre3.setSize(200,100);
 	     nombre3.setLocation(90,130);
 	     nombre3.setForeground(Color.white);
@@ -709,7 +709,7 @@ public class Interfaz extends JFrame {
 	     nommbre1t.setLocation(90,190);
 	     crear.add(nommbre1t);
 	     
-	     JLabel usuario1 = new JLabel ("Nombre de Usuario:");
+	     JLabel usuario1 = new JLabel ("Apellido:");
 	     usuario1.setSize(200,100);
 	     usuario1.setLocation(90,175);
 	     usuario1.setForeground(Color.white);
@@ -872,6 +872,7 @@ public class Interfaz extends JFrame {
 	     pasos.setPreferredSize(new Dimension(240,200));
 	     pasos.setBackground(Color.decode("#3EB2BE"));
 	     pasos.setLocation(125,10);
+	     pasos.setEditable(false);
 	     info.add(pasos);
 	     
 	     JButton opcion = new JButton("Crear un usuario ahora");
