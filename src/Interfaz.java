@@ -854,6 +854,11 @@ public class Interfaz extends JFrame {
 	    	 }
 	     });
 	     
+	     JLabel imagen4 = new JLabel(new ImageIcon("ayuda.png"));
+	     imagen4.setSize(120,110);
+	     imagen4.setLocation(132,55);
+	     como.add(imagen4);
+	     
 	     JPanel info = new JPanel();
 	     info.setSize(250,250);
 	     info.setLocation(67,185);
@@ -875,6 +880,16 @@ public class Interfaz extends JFrame {
 	     opcion.setBackground(Color.decode("#00E7FF"));
 	     opcion.setForeground(Color.black);
 	     info.add(opcion);
+	     
+	     opcion.addActionListener(new ActionListener() {
+	    	 @Override
+	    	 public void actionPerformed(ActionEvent e) {
+	    		 remove(como);
+	    		 add(crear);
+	    		 repaint();
+	    		 revalidate();
+	    	 }
+	     });
 	     
 	     this.revalidate();
 	     this.repaint();
