@@ -1,2 +1,3 @@
 asd,vargas,asd@gmail.com,123,
-edu,vargas,email:,asd
+edu,vargas,edu@gmail.com,asd
+karlo,zumaya,karlob@alu.uabcs.mx,kb

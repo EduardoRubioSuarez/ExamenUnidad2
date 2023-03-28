@@ -9,10 +9,16 @@ import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
+import java.util.Random;
+import java.util.Scanner;
 
 import javax.swing.AbstractCellEditor;
 import javax.swing.ImageIcon;
@@ -38,6 +44,24 @@ import javax.swing.table.TableCellRenderer;
 import javax.swing.table.TableColumn;
 
 public class Interfaz extends JFrame {
+	
+	public int contador (String archivo) {
+	 	   try{
+	            FileReader lector = new FileReader("C:\\Users\\rubio\\Desktop\\Ventana\\Ventana\\Users.txt");
+	            BufferedReader br = new BufferedReader(lector);
+	            String renglon;
+	            int filas = 0;
+	            while ((renglon = br.readLine()) != null) {
+	                filas++;
+	            }
+	            return filas;
+	        }
+	        catch (FileNotFoundException ex) {
+	            throw new RuntimeException(ex);
+	        } catch (IOException ex) {
+	            throw new RuntimeException(ex);
+	        }
+		}
 	
 	public Interfaz() {
 		 this.setTitle("Interfaz");
@@ -126,7 +150,7 @@ public class Interfaz extends JFrame {
 	     imagen1.setLocation(132,65);
 	     login.add(imagen1);
 	     
-	     JLabel usuario = new JLabel ("Correo electronico:",JLabel.CENTER);
+	     JLabel usuario = new JLabel ("Nombre:",JLabel.CENTER);
 	     usuario.setSize(200,100);
 	     usuario.setLocation(90,160);
 	     usuario.setForeground(Color.white);
@@ -173,7 +197,6 @@ public class Interfaz extends JFrame {
 	     login.add(inicio);
 	     
 	     
-	     /////// NO JALAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 	     inicio.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -442,7 +465,7 @@ public class Interfaz extends JFrame {
 	     contraseña.setForeground(Color.white);
 	     cuenta.add(contraseña);
 	     
-	     JTextField contra = new JTextField();
+	     JPasswordField contra = new JPasswordField();
 	     contra.setSize(200,20);
 	     contra.setLocation(90,355);
 	     cuenta.add(contra);
@@ -461,7 +484,30 @@ public class Interfaz extends JFrame {
 	     actualizar.setForeground(Color.black);
 	     cuenta.add(actualizar);
 	     
-	     
+	     ///////////////////////////////////////////////////////////////////////////////////////
+	     //Falta arreglar la edicion de los datos
+	     ///////////////////////////////////////////////////////////////////////////////////////
+	     actualizar.addActionListener(new ActionListener() {
+	    	 @Override
+	    	 public void actionPerformed(ActionEvent e) {
+	    		
+	    		 if(nom.getText().length()>0 && ape.getText().length()>0 && mail.getText().length()>0 && contra.getPassword().length>0) { 
+	    			 try {
+	    				 BufferedReader  lector;
+						lector = new BufferedReader(new FileReader("C:\\Users\\rubio\\Desktop\\Examen_U2\\ExamenU2\\Users.txt"));
+						String line = lector.readLine();
+	    			// ModificarFichero("Users.txt",line,);
+	    			
+						lector.close();
+					} catch (IOException e1) {
+						// TODO Auto-generated catch block
+						e1.printStackTrace();
+					}
+	    		 }else
+	    			 JOptionPane.showMessageDialog(null,"Alguno de los campos se encuentra vacio","Error", JOptionPane.ERROR_MESSAGE);
+	    	 }
+	     });
+	   
 
 	     ////////////////////////////////////////////////////////////////////////////////////
 	     //Lista de usuarios
@@ -578,6 +624,44 @@ public class Interfaz extends JFrame {
 	     JButton borrar = new JButton();
 	     listaU.add(aceptarE);
 	     
+	     
+	     
+	   
+				    Object[]columnas = {"Nombre","Apellidos", "Correo","Acciones"};
+				    int numfilas = contador("Users.txt");
+				    
+				    int numcolumnas = 4;
+				    Object[][] datos =new Object[numfilas][numcolumnas];
+				    
+				    try{
+	                    BufferedReader BR = new BufferedReader(new FileReader("Users.txt"));
+	                    String lector;
+	                    String[] infototal = new String[numcolumnas*numfilas];
+	                    String[] arreglo;
+	                    int i = 0;
+
+	                    while((lector = BR.readLine()) != null ){
+	                    	arreglo = lector.split(",");
+	                    	infototal[i++] = arreglo[0];
+	                    	infototal[i++] = arreglo[1];
+	                    	infototal[i++] = arreglo[2];
+	                    	infototal[i++] = "Esto no jala :(";
+	                    }
+	                    int posicion = 0;
+	                    for ( int y = 0; y < infototal.length; y++) {
+	                        for (int x = 0; x< 4; x++){
+	                            datos[y][x] = infototal[posicion++];
+	                        }
+	                    }
+	                }catch(Exception f){}
+				    
+				    DefaultTableModel dtm = new DefaultTableModel(datos,columnas);
+	                JTable jt = new JTable(dtm);
+	                JScrollPane sp = new JScrollPane(jt);
+	                sp.setBounds(20,220,350,100);
+	                listaU.add(sp);
+	      
+	     /*
 	     String [] columnas  =  {"Usuario","Nombre","accion"}; 
 	     Object [][] data  =  new Object [3][2];
 	     
@@ -599,7 +683,7 @@ public class Interfaz extends JFrame {
 	     agregarColumn = tabla.getColumnModel().getColumn(2);
 	     agregarColumn.setCellEditor(new myeditor(tabla));
 	     agregarColumn.setCellRenderer(new myrenderer(true));
-	     
+	     */
 	      
 
 	     ////////////////////////////////////////////////////////////////////////////////////
@@ -791,7 +875,7 @@ public class Interfaz extends JFrame {
 					String cont2 = new String(password2t.getPassword());
 					String nom = new String(nombre1t.getText());
 					String ape = new String(nomU1t.getText());
-					String corr = new String(email1.getText());
+					String corr = new String(email1t.getText());
 					if(cont1.length()>0 && cont2.length()>0 && nom.length()>0 && ape.length()>0 && corr.length()>0) {
 						if(cont1.equals(cont2)) {
 							JOptionPane.showMessageDialog(null,"Cuenta creada con exito","Exito", JOptionPane.INFORMATION_MESSAGE);
@@ -944,6 +1028,89 @@ public class Interfaz extends JFrame {
 	     this.repaint();
 	     
 	}
+	
+	public static void EcribirFichero(File Ffichero,String SCadena){
+		  try {
+		          //Si no Existe el fichero lo crea
+		           if(!Ffichero.exists()){
+		               Ffichero.createNewFile();
+		           }
+		          /*Abre un Flujo de escritura,sobre el fichero con codificacion utf-8. 
+		           *Además  en el pedazo de sentencia "FileOutputStream(Ffichero,true)",
+		           *true es por si existe el fichero seguir añadiendo texto y no borrar lo que tenia*/
+		          BufferedWriter Fescribe=new BufferedWriter(new OutputStreamWriter(new FileOutputStream(Ffichero,true), "utf-8"));
+		          /*Escribe en el fichero la cadena que recibe la función. 
+		           *el string "\r\n" significa salto de linea*/
+		          Fescribe.write(SCadena + "\r\n");
+		          //Cierra el flujo de escritura
+		          Fescribe.close();
+		       } catch (Exception ex) {
+		          //Captura un posible error le imprime en pantalla 
+		          System.out.println(ex.getMessage());
+		       } 
+	}
+	
+	
+	
+	public static  void BorrarFichero(File Ffichero){
+	     try {
+	         /*Si existe el fichero*/
+	         if(Ffichero.exists()){
+	           /*Borra el fichero*/  
+	           Ffichero.delete(); 
+	           System.out.println("Fichero Borrado con Exito");
+	         }
+	     } catch (Exception ex) {
+	         /*Captura un posible error y le imprime en pantalla*/ 
+	          System.out.println(ex.getMessage());
+	     }
+	} 
+	
+	
+	    public static  void ModificarFichero(File FficheroAntiguo,String Satigualinea,String Snuevalinea){        
+	        /*Obtengo un numero aleatorio*/
+	        Random numaleatorio= new Random(3816L); 
+	        /*Creo un nombre para el nuevo fichero apartir del
+	         *numero aleatorio*/
+	        String SnombFichNuev=FficheroAntiguo.getParent()+"/auxiliar"+String.valueOf(Math.abs(numaleatorio.nextInt()))+".txt";
+	        /*Crea un objeto File para el fichero nuevo*/
+	        File FficheroNuevo=new File(SnombFichNuev);
+	        try {
+	            /*Si existe el fichero inical*/
+	            if(FficheroAntiguo.exists()){
+	                /*Abro un flujo de lectura*/
+	                BufferedReader Flee= new BufferedReader(new FileReader(FficheroAntiguo));
+	                String Slinea;
+	                /*Recorro el fichero de texto linea a linea*/
+	                while((Slinea=Flee.readLine())!=null) { 
+	                    /*Si la lia obtenida es igual al la bucada
+	                     *para modificar*/
+	                    if (Slinea.toUpperCase().trim().equals(Satigualinea.toUpperCase().trim())) {
+	                       /*Escribo la nueva linea en vez de la que tenia*/
+	                        EcribirFichero(FficheroNuevo,Snuevalinea);
+	                    }else{
+	                        /*Escribo la linea antigua*/
+	                         EcribirFichero(FficheroNuevo,Slinea);
+	                    }             
+	                }
+	                /*Obtengo el nombre del fichero inicial*/
+	                String SnomAntiguo=FficheroAntiguo.getName();
+	                /*Borro el fichero inicial*/
+	                BorrarFichero(FficheroAntiguo);
+	                /*renombro el nuevo fichero con el nombre del 
+	                *fichero inicial*/
+	                FficheroNuevo.renameTo(FficheroAntiguo);
+	                /*Cierro el flujo de lectura*/
+	                Flee.close();
+	            }else{
+	                System.out.println("Fichero No Existe");
+	            }
+	        } catch (Exception ex) {
+	            /*Captura un posible error y le imprime en pantalla*/ 
+	             System.out.println(ex.getMessage());
+	        }
+	    }
+	
 	
 	public class myrenderer extends JLabel implements TableCellRenderer {
 
