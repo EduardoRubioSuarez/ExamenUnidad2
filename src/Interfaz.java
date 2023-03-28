@@ -37,6 +37,7 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellEditor;
@@ -70,7 +71,7 @@ public class Interfaz extends JFrame {
 	     this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	     this.setVisible(true);
 	     this.setLayout(null);
-	    
+	     
 	     //SE DEFINEN LAS VENTANAS
 	     JPanel splash = new JPanel();
 	     JPanel login = new JPanel();
@@ -314,9 +315,9 @@ public class Interfaz extends JFrame {
 	     });
 	     
 	     
-	     JLabel saludo = new JLabel("Bienvenido " + "Nombre de usuario");
+	     JLabel saludo = new JLabel("Bienvenido ",SwingConstants.LEFT);
 	     saludo.setSize(400,50);
-	     saludo.setLocation(40,70);
+	     saludo.setLocation(130,70);
 	     saludo.setFont(new Font("",Font.HANGING_BASELINE,22));
 	     saludo.setForeground(Color.white);
 	     menu.add(saludo);
@@ -1110,8 +1111,9 @@ public class Interfaz extends JFrame {
 	             System.out.println(ex.getMessage());
 	        }
 	    }
-	
-	
+	////////////////////////////////////////////////////////////////////////
+	//ESTO SERVIRIA PARA LOS BOTONES DENTRO DE LA TABLA
+	/*
 	public class myrenderer extends JLabel implements TableCellRenderer {
 
 	    boolean isBordered = true;
@@ -1132,7 +1134,6 @@ public class Interfaz extends JFrame {
 	        }
 	    }
 	}
-	
 	
 	public class myeditor extends AbstractCellEditor implements TableCellEditor, ActionListener {
 
@@ -1168,7 +1169,7 @@ public class Interfaz extends JFrame {
 	        return new JLabel();
 	    }
 	}
-	
+	*/
 	
 
 }
